@@ -75,7 +75,7 @@ int main() {
       */
 
       // Show path
-      vector<HAS::maze_s> show_path = has.reconstruct_path(get_path.came_from, START, get_path.final);
+      vector<HAS::maze_s> show_path = has.retrace_path(get_path.came_from, START, get_path.final);
 
       // write to output file
 

@@ -80,9 +80,9 @@ public:
                        vector<int> goal,
                        string heuristic_method);
 
-  vector<maze_s> reconstruct_path(vector< vector< vector<maze_s> > > came_from,
-                                  vector<double> start,
-                                  HAS::maze_s final);
+vector<maze_s> retrace_path(vector< vector< vector<maze_s> > > came_from,
+                            vector<double> start,
+                            HAS::maze_s final);
 
 };
 

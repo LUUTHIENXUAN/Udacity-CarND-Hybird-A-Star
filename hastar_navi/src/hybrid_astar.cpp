@@ -122,7 +122,6 @@ vector<HAS::maze_s> HAS::expand(HAS::maze_s state,
     double y2 = y + SPEED * sin(theta);
 
     // Update next state cost
-    //g2        = g2 + turning_cost(state, theta2);
     int f2    = g2 + heuristic(x2, y2, goal, heuristic_method);
 
     // Create a new State object with all of the "next" values.
@@ -133,7 +132,7 @@ vector<HAS::maze_s> HAS::expand(HAS::maze_s state,
   return next_states;
 }
 
-vector<HAS::maze_s> HAS::reconstruct_path(vector< vector< vector<HAS::maze_s> > > came_from,
+vector<HAS::maze_s> HAS::retrace_path(vector< vector< vector<HAS::maze_s> > > came_from,
                                           vector<double> start,
                                           HAS::maze_s final){
 
@@ -149,6 +148,7 @@ vector<HAS::maze_s> HAS::reconstruct_path(vector< vector< vector<HAS::maze_s> > 
 	double y = current.y;
 
 	while( x != start[0] || y != start[1] ){
+
 		path.push_back(current);
 		current = came_from[stack][idx(x)][idx(y)];
 		x = current.x;

@@ -6,7 +6,7 @@
 
 #IncludeRegexTransform: 
 
-/home/mouse152n-04u/デスクトップ/hastar_navi/src/hybrid_astar.cpp
+/home/mouse152n-04u/Udacity-CarND-Hybird-A-Star/hastar_navi/src/hybrid_astar.cpp
 algorithm
 -
 iostream
@@ -20,11 +20,11 @@ math.h
 vector
 -
 hybrid_astar.h
-/home/mouse152n-04u/デスクトップ/hastar_navi/src/hybrid_astar.h
+/home/mouse152n-04u/Udacity-CarND-Hybird-A-Star/hastar_navi/src/hybrid_astar.h
 boost/heap/binomial_heap.hpp
 -
 
-/home/mouse152n-04u/デスクトップ/hastar_navi/src/hybrid_astar.h
+/home/mouse152n-04u/Udacity-CarND-Hybird-A-Star/hastar_navi/src/hybrid_astar.h
 iostream
 -
 sstream
@@ -36,7 +36,7 @@ math.h
 vector
 -
 
-/home/mouse152n-04u/デスクトップ/hastar_navi/src/main.cpp
+/home/mouse152n-04u/Udacity-CarND-Hybird-A-Star/hastar_navi/src/main.cpp
 iostream
 -
 fstream
@@ -46,7 +46,7 @@ math.h
 vector
 -
 hybrid_astar.h
-/home/mouse152n-04u/デスクトップ/hastar_navi/src/hybrid_astar.h
+/home/mouse152n-04u/Udacity-CarND-Hybird-A-Star/hastar_navi/src/hybrid_astar.h
 chrono
 -
 
