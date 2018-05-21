@@ -52,7 +52,6 @@ int main() {
 
 
   HAS has      = HAS();
-  HAS has_heap = HAS();
 
   for (auto &heuristic : heuristic_methods){
 
@@ -60,22 +59,13 @@ int main() {
       auto start = Clock::now();
       cout<< "================== ================== =================="<< endl;
       cout<< "Heuristic methods: " << heuristic << endl;
-      HAS::maze_path get_path = has.search_heap(GRID, START, GOAL, heuristic);
+      HAS::grid_path get_path = has.search_heap(GRID, START, GOAL, heuristic);
       auto end = Clock::now();
       auto dur = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
       cout<< " time processed: " << dur << " milliseconds" << endl;
 
-      /*
-      cout<< " ------------------ ------------------ ------------------"<< endl;
-      start = Clock::now();
-      HAS::maze_path get_path_heap = has_heap.search_heap(GRID, START, GOAL, heuristic);
-      end = Clock::now();
-      dur = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
-      cout<< " time processed: " << dur << " milliseconds" << endl;
-      */
-
       // Show path
-      vector<HAS::maze_s> show_path = has.retrace_path(get_path.came_from, START, get_path.final);
+      vector<HAS::Node3D> show_path = has.retrace_path(get_path.came_from, START, get_path.final);
 
       // write to output file
 
@@ -83,7 +73,7 @@ int main() {
 
       for(int i = show_path.size()-1; i >= 0; i--) {
 
-          HAS::maze_s step = show_path[i];
+          HAS::Node3D step = show_path[i];
           cout << "##### step " << step.g << " #####" << endl;
           cout << "x " << step.x << endl;
           cout << "y " << step.y << endl;

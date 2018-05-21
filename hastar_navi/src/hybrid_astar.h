@@ -16,26 +16,28 @@ public:
 	/*angle resolution when expanding to new postion
 	 *between max turnable angles(left & right)
 	 */
-	int max_turnable   = 35; //degree
+	int max_turnable   = 30; //degree
 	int turning_res    =  5; //degree
 
 	double SPEED = 1.45;
 	double LENGTH = 0.5;
 
-	struct maze_s {
+	struct Node3D {
 
 		int g;	// iteration
 		int f;
 		double x;
 		double y;
 		double theta;
+
+		struct Node3D *parent;
 	};
 
-	struct maze_path {
+	struct grid_path {
 
 		vector< vector< vector<int> > > closed;
-		vector< vector< vector<maze_s> > > came_from;
-		maze_s final;
+		vector< vector< vector<Node3D> > > came_from;
+		Node3D final;
 
 	};
 
@@ -50,14 +52,14 @@ public:
  	*/
  	virtual ~HAS();
 
- 	static bool compare_maze_s(const HAS::maze_s & lhs,
-                             const HAS::maze_s & rhs);
+ 	static bool compare_Node3D(const HAS::Node3D & lhs,
+                             const HAS::Node3D & rhs);
 
   double heuristic(double x, double y,
                    vector<int> goal,
                    string heuristic_method );
 
-  int turning_cost(HAS::maze_s current_state,
+  int turning_cost(HAS::Node3D current_state,
                    double next_angle);
 
  	int theta_to_stack_number(double theta);
@@ -66,23 +68,23 @@ public:
 
   vector<string> heuristic_methods;
 
-  vector<maze_s> expand(maze_s state,
+  vector<Node3D> expand(Node3D state,
                         vector<int> goal,
                         string heuristic_method);
 
-  maze_path search(vector< vector<int> > grid,
+  grid_path search(vector< vector<int> > grid,
                    vector<double> start,
                    vector<int> goal,
                    string heuristic_method);
 
- maze_path search_heap(vector< vector<int> > grid,
+  grid_path search_heap(vector< vector<int> > grid,
                        vector<double> start,
                        vector<int> goal,
                        string heuristic_method);
 
-vector<maze_s> retrace_path(vector< vector< vector<maze_s> > > came_from,
+  vector<Node3D> retrace_path(vector< vector< vector<Node3D> > > came_from,
                             vector<double> start,
-                            HAS::maze_s final);
+                            HAS::Node3D final);
 
 };
 
