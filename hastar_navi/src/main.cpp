@@ -51,42 +51,56 @@ vector<string> heuristic_methods = {"Manhattan",
 int main() {
 
 
-  HAS has      = HAS();
+
 
   for (auto &heuristic : heuristic_methods){
 
+    HAS has      = HAS();
 
-      auto start = Clock::now();
-      cout<< "================== ================== =================="<< endl;
-      cout<< "Heuristic methods: " << heuristic << endl;
-      HAS::grid_path get_path = has.search_heap(GRID, START, GOAL, heuristic);
-      auto end = Clock::now();
-      auto dur = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
-      cout<< " time processed: " << dur << " milliseconds" << endl;
+    auto start = Clock::now();
+    cout<< "================== ================== =================="<< endl;
+    cout<< "Heuristic methods: " << heuristic << endl;
+    HAS::grid_path get_path = has.search_heap(GRID, START, GOAL, heuristic);
+    auto end = Clock::now();
+    auto dur = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
+    cout<< " time processed: " << dur << " milliseconds" << endl;
 
-      // Show path
-      vector<HAS::Node3D> show_path = has.retrace_path(get_path.came_from, START, get_path.final);
+    // Show path
+    vector<HAS::Node3D> show_path     = has.retrace_path(get_path.came_from, START, get_path.final);
 
-      // write to output file
+    vector<HAS::Node3D> smoothed_path = has.smooth_path(show_path, 0.5, 0.1, 0.00001);
+    
+    // write to output file
 
-      std::ofstream output_file("/home/mouse152n-04u/TEST/Hybrid_Astar/"+ std::string(heuristic) + "_method.txt");
+    std::ofstream output_file("/home/mouse152n-04u/TEST/Hybrid_Astar/"+ std::string(heuristic) + "_method.txt");
 
-      for(int i = show_path.size()-1; i >= 0; i--) {
+    for(auto &step: show_path) {
 
-          HAS::Node3D step = show_path[i];
-          cout << "##### step " << step.g << " #####" << endl;
-          cout << "x " << step.x << endl;
-          cout << "y " << step.y << endl;
-          cout << "theta " << step.theta << endl;
-
-          if (output_file) {
-
-          std::clog << "*** [INFO] Writing to file " << "\n" ;
+        if (output_file) {
+          //std::clog << "*** [INFO] Writing found path to file " << "\n" ;
           output_file << step.x << " " << step.y << " " << step.theta << "\n";
-          }
-          else std::clog << "*** [BUG] Unable to open file: " << "'\n" ;
+        }
+        else std::clog << "*** [BUG] Unable to open file: " << "'\n" ;
 
-      }
+    }
+
+    std::ofstream output_file_smoothed("/home/mouse152n-04u/TEST/Hybrid_Astar/"+ std::string(heuristic) + "_method_smoothed.txt");
+
+    for(auto &smooth: smoothed_path) {
+
+        if (output_file_smoothed) {
+          /*
+          cout << "##### step " << smooth.g << " #####" << endl;
+          cout << "x " << smooth.x << endl;
+          cout << "y " << smooth.y << endl;
+          cout << "theta " << smooth.theta << endl;
+          */
+          std::clog << "*** [INFO] Writing smoothed path to file " << "\n" ;
+          output_file_smoothed << smooth.x << " " << smooth.y << " " << smooth.theta << "\n";
+        }
+        else std::clog << "*** [BUG] Unable to open file: " << "'\n" ;
+
+    }
 
 
   }

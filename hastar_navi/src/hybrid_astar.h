@@ -33,6 +33,14 @@ public:
 		struct Node3D *parent;
 	};
 
+	struct Node2D {
+    double x;
+    double y;
+
+    Node2D(const double _x, const double _y)
+        : x(_x), y(_y){}
+  };
+
 	struct grid_path {
 
 		vector< vector< vector<int> > > closed;
@@ -85,6 +93,10 @@ public:
   vector<Node3D> retrace_path(vector< vector< vector<Node3D> > > came_from,
                             vector<double> start,
                             HAS::Node3D final);
+
+  vector<Node3D> smooth_path(vector<Node3D> path,
+		                         double weight, double smooth,
+														 double tolerance);
 
 };
 
