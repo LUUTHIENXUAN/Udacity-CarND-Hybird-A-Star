@@ -67,8 +67,9 @@ public:
                    vector<int> goal,
                    string heuristic_method );
 
-  int turning_cost(HAS::Node3D current_state,
-                   double next_angle);
+  double turning_cost(double next_turn_angle,
+	                    double max_turnable,
+	                    double turning_weight);
 
  	int theta_to_stack_number(double theta);
 

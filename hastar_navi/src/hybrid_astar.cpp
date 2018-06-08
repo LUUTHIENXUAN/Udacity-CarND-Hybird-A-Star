@@ -49,22 +49,6 @@ double HAS::heuristic(double x, double y,
 
 }
 
-/*  HAS::turning_cost(HAS::Node3D current_state,
-                      double next_angle)
-    Input:  current state of car [x,y,theta]: current_state
-            next state of car [theta]: next_angle when expanding
-    Output: cost to turn
-*/
-int HAS::turning_cost(HAS::Node3D current_state,
-                      double next_angle){
-
-    double angle_diff_rad = fabs(next_angle -current_state.theta); // radian
-    int    angle_diff_deg = angle_diff_rad * 180.0/ M_PI; // convert to degree
-    int    cost           = angle_diff_deg % turning_res;
-
-    return cost;
-
-}
 
 /* HAS::theta_to_stack_number(double theta)
 Takes an angle (in radians) and returns which "stack" in the 3D configuration space
@@ -87,6 +71,13 @@ int HAS::idx(double float_num) {
   return int(floor(float_num));
 }
 
+double HAS::turning_cost(double next_turn_angle,
+                         double max_turnable,
+                         double turning_weight){
+
+    return turning_weight * fabs(next_turn_angle)/max_turnable;
+
+}
 
 vector<HAS::Node3D> HAS::expand(HAS::Node3D state,
                                 vector<int> goal,
@@ -115,8 +106,11 @@ vector<HAS::Node3D> HAS::expand(HAS::Node3D state,
     double x2 = x + SPEED * cos(theta);
     double y2 = y + SPEED * sin(theta);
 
+
     // Update next state cost
-    int f2    = g2 + heuristic(x2, y2, goal, heuristic_method);
+    int f2    = g2
+                + turning_cost(delta_i, max_turnable, 1)
+                + heuristic(x2, y2, goal, heuristic_method);
 
     // Create a new State object with all of the "next" values.
     HAS::Node3D state2 {g2, f2, x2, y2, theta2,};
@@ -124,6 +118,7 @@ vector<HAS::Node3D> HAS::expand(HAS::Node3D state,
 
   }
   return next_states;
+  
 }
 
 HAS::grid_path HAS::search_heap(vector<vector<int>> grid,
